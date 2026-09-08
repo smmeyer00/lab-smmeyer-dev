@@ -8,15 +8,15 @@ test("renders the lab identity and current experiment", async ({ page }) => {
     page.getByRole("heading", { level: 1, name: "LAB." }),
   ).toBeVisible();
   await expect(
-    page.getByText("A place to make strange ideas tangible."),
+    page.getByText("Things I build to figure out whether they’ll work."),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "On the bench" }),
+    page.getByRole("heading", { name: "Building now" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "The desk, reconstructed." }),
+    page.getByRole("heading", { name: "My desk, rebuilt from photos." }),
   ).toBeVisible();
-  await expect(page.getByText("Interactive view coming next")).toBeVisible();
+  await expect(page.getByText("Interactive viewer is next")).toBeVisible();
   await expect(page.getByRole("link", { name: /Main site/i })).toHaveAttribute(
     "href",
     "https://smmeyer.dev",
@@ -32,11 +32,11 @@ test("renders the lab identity and current experiment", async ({ page }) => {
 
 test("moves from the hero to the experiment index", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: "Browse experiments" }).click();
+  await page.getByRole("link", { name: "See what I’m working on" }).click();
 
   await expect(page).toHaveURL(/#experiments$/);
   await expect(
-    page.getByRole("heading", { name: "On the bench" }),
+    page.getByRole("heading", { name: "Building now" }),
   ).toBeInViewport();
 });
 
@@ -91,7 +91,7 @@ test("uses the compact navigation only on mobile projects", async ({
 
   const experimentsLink = page
     .getByRole("navigation")
-    .getByRole("link", { name: "Experiments" });
+    .getByRole("link", { name: "Projects" });
   const isMobileProject = testInfo.project.name.startsWith("mobile-");
 
   if (isMobileProject) {

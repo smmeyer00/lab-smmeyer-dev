@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Lab — SM Meyer",
   description:
-    "A collection of experiments, prototypes, and things SM Meyer wanted to see exist.",
+    "Small experiments, prototypes, and unfinished ideas by SM Meyer.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

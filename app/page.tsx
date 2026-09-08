@@ -4,9 +4,9 @@ import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import labHero from "@/public/lab-hero.png";
 
 const buildNotes = [
-  ["Input", "New tools + stubborn questions"],
-  ["Output", "Models, prototypes, and field notes"],
-  ["Cadence", "Whenever there is something worth showing"],
+  ["Input", "A tool or idea I can’t leave alone"],
+  ["Rule", "Make something real with it"],
+  ["Output", "Share the result, rough edges included"],
 ];
 
 export default function Home() {
@@ -26,7 +26,7 @@ export default function Home() {
               href="#experiments"
               className="hidden transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:block"
             >
-              Experiments
+              Projects
             </a>
             <a
               href="https://smmeyer.dev"
@@ -61,7 +61,7 @@ export default function Home() {
           <div className="w-full max-w-4xl">
             <div className="hero-enter flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-white/55">
               <span className="signal-dot size-1.5 rounded-full bg-[#e7e3d8]" />
-              Personal research space
+              Personal experiments
               <span className="h-px w-12 bg-white/25" />
               Est. 2026
             </div>
@@ -75,10 +75,10 @@ export default function Home() {
 
             <div className="hero-enter hero-delay-2 mt-10 max-w-xl border-l border-white/25 pl-5 sm:mt-12 sm:pl-7">
               <p className="text-xl font-medium leading-snug tracking-[-0.025em] text-[#ece9e1] sm:text-2xl">
-                A place to make strange ideas tangible.
+                Things I build to figure out whether they’ll work.
               </p>
               <p className="mt-3 max-w-md text-sm leading-6 text-white/52 sm:text-base">
-                Experiments, prototypes, and things I wanted to see exist.
+                Mostly software. Sometimes hardware. Usually still in progress.
               </p>
             </div>
 
@@ -86,7 +86,7 @@ export default function Home() {
               href="#experiments"
               className="hero-enter hero-delay-3 group mt-9 inline-flex items-center gap-5 border-b border-white/40 pb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white transition-colors hover:border-white hover:text-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:mt-11"
             >
-              Browse experiments
+              See what I’m working on
               <ArrowDownRight
                 aria-hidden="true"
                 className="size-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"
@@ -96,9 +96,9 @@ export default function Home() {
         </div>
 
         <div className="absolute bottom-10 right-5 z-10 hidden text-right font-mono text-[9px] uppercase leading-5 tracking-[0.18em] text-white/35 sm:block sm:right-8 lg:right-12">
-          <p>Node / LAB-01</p>
-          <p>Status / nominal</p>
-          <p className="mt-2 text-white/60">Signal / open</p>
+          <p>Current / 001</p>
+          <p>Next / /desk</p>
+          <p className="mt-2 text-white/60">Status / building</p>
         </div>
       </section>
 
@@ -111,17 +111,17 @@ export default function Home() {
           <div className="flex items-end justify-between border-b border-white/14 pb-5">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
-                Index / 01
+                Projects / 01
               </p>
               <h2
                 id="experiments-title"
                 className="mt-3 text-3xl font-medium tracking-[-0.04em] text-[#e8e5dd] sm:text-5xl"
               >
-                On the bench
+                Building now
               </h2>
             </div>
             <p className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-white/35 sm:block">
-              One experiment in progress
+              One active project
             </p>
           </div>
 
@@ -129,24 +129,24 @@ export default function Home() {
             <div className="flex flex-col justify-between py-2">
               <div>
                 <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
-                  <span>001 / Spatial reconstruction</span>
+                  <span>001 / Blender + GPT-6 Astra</span>
                   <span className="md:hidden">/desk</span>
                 </div>
                 <h3 className="mt-8 max-w-md text-4xl font-medium leading-[0.98] tracking-[-0.05em] text-[#e8e5dd] sm:text-6xl lg:text-7xl">
-                  The desk,
+                  My desk,
                   <br />
-                  reconstructed.
+                  rebuilt from photos.
                 </h3>
                 <p className="mt-7 max-w-md text-sm leading-6 text-white/50 sm:text-base sm:leading-7">
-                  A detailed desk model built in Blender by GPT-6 Astra, using only
-                  photographs and a live MCP connection.
+                  I gave GPT-6 Astra reference photos and access to Blender through
+                  MCP. It handled the modeling. The interactive version is next.
                 </p>
               </div>
 
               <div className="mt-12 flex items-end justify-between border-t border-white/10 pt-5 md:mt-16">
                 <div className="font-mono text-[9px] uppercase leading-5 tracking-[0.18em] text-white/35">
-                  <p>Blender / AI / 3D</p>
-                  <p className="text-white/65">Interactive view coming next</p>
+                  <p>GPT-6 Astra / Blender / MCP</p>
+                  <p className="text-white/65">Interactive viewer is next</p>
                 </div>
                 <span className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-white/45 md:block">
                   /desk
@@ -168,15 +168,15 @@ export default function Home() {
               <div className="glass-panel absolute bottom-4 left-4 right-4 flex items-center justify-between px-4 py-3 font-mono text-[9px] uppercase tracking-[0.18em] text-white/55 sm:bottom-5 sm:left-5 sm:right-5 sm:px-5">
                 <span className="flex items-center gap-2.5">
                   <span className="signal-dot size-1.5 rounded-full bg-[#e7e3d8]" />
-                  In development
+                  Model / complete
                 </span>
-                <span>Mesh / active</span>
+                <span>Viewer / building</span>
               </div>
             </figure>
           </article>
 
           <p className="mt-6 max-w-sm text-xs leading-5 text-white/35">
-            More experiments will appear here as they earn a URL.
+            This list will grow when I have something interesting enough to share.
           </p>
         </div>
       </section>
@@ -188,17 +188,17 @@ export default function Home() {
         <div className="reveal-on-scroll mx-auto grid max-w-[92rem] gap-16 lg:grid-cols-[1.25fr_0.75fr] lg:gap-24">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
-              Operating principle
+              Why this exists
             </p>
             <h2
               id="method-title"
               className="mt-6 max-w-4xl text-5xl font-medium leading-[0.98] tracking-[-0.055em] text-[#e8e5dd] sm:text-7xl lg:text-8xl"
             >
-              The unfinished stuff is the point.
+              I learn faster when there’s something real to poke at.
             </h2>
             <p className="mt-8 max-w-xl text-base leading-7 text-white/48 sm:text-lg sm:leading-8">
-              This is where I test new tools in public. Some ideas become useful.
-              Some stay interesting failures. Both belong here.
+              I use this space to learn new tools by building with them. The result
+              doesn’t have to be useful. It does have to teach me something.
             </p>
           </div>
 
@@ -223,10 +223,10 @@ export default function Home() {
         <div className="reveal-on-scroll relative mx-auto flex max-w-[92rem] flex-col items-start justify-between gap-12 sm:flex-row sm:items-end">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
-              End transmission
+              That’s it for now
             </p>
             <h2 className="mt-5 max-w-3xl text-5xl font-medium leading-[0.98] tracking-[-0.055em] text-[#e8e5dd] sm:text-7xl lg:text-8xl">
-              Something odd is always loading.
+              More when I make something worth sharing.
             </h2>
           </div>
           <a
@@ -245,7 +245,7 @@ export default function Home() {
       <footer className="border-t border-white/10 bg-[#090908] px-5 py-7 sm:px-8 lg:px-12">
         <div className="mx-auto flex max-w-[92rem] items-center justify-between font-mono text-[9px] uppercase tracking-[0.18em] text-white/30">
           <p>© 2026 SM Meyer</p>
-          <p>Built somewhere near the edge</p>
+          <p>No roadmap. That’s the point.</p>
         </div>
       </footer>
     </main>
