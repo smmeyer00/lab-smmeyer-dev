@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SM Meyer Lab
 
-## Getting Started
+The source for [lab.smmeyer.dev](https://lab.smmeyer.dev), a collection of experiments, prototypes, and field notes.
 
-First, run the development server:
+## Development
+
+Install dependencies and start the Next.js development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Browser tests
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The end-to-end suite builds the production app with Webpack, starts it on port `3100`, and tests it in desktop Chromium, Firefox, WebKit, mobile Chrome, and mobile Safari:
 
-## Learn More
+```bash
+pnpm test:e2e
+```
 
-To learn more about Next.js, take a look at the following resources:
+Useful focused commands:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm exec playwright test --project=chromium
+pnpm exec playwright test tests/e2e/home.spec.ts
+pnpm test:e2e:ui
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Tests live in `tests/e2e`. Add one spec per route or user flow and navigate with relative URLs such as `page.goto("/desk")`; the configured `baseURL` supplies the local origin. Screenshots are captured only on failure, while traces and video are retained for failed retries.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The Playwright GitHub Actions workflow runs the complete browser matrix for pushes and pull requests.
