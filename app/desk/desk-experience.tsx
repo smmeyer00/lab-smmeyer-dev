@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ArrowLeft, Info, LocateFixed, MousePointer2, X } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const DeskScene = dynamic(
   () => import("./desk-scene").then((module) => module.DeskScene),
@@ -18,7 +18,6 @@ export function DeskExperience() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [resetToken, setResetToken] = useState(0);
   const [coarsePointer, setCoarsePointer] = useState(false);
-  const requestWalk = useRef<() => void>(() => undefined);
 
   useEffect(() => {
     const query = window.matchMedia("(pointer: coarse)");
@@ -42,13 +41,6 @@ export function DeskExperience() {
 
   const chromeHidden = mode === "walk";
   const markReady = useCallback(() => setReady(true), []);
-  const registerWalkRequest = useCallback((request: () => void) => {
-    requestWalk.current = request;
-  }, []);
-  const enterWalkthrough = () => {
-    setMode("walk");
-    requestWalk.current();
-  };
 
   return (
     <main
@@ -63,7 +55,6 @@ export function DeskExperience() {
           resetToken={resetToken}
           onModeChange={setMode}
           onReady={markReady}
-          onWalkRequestReady={registerWalkRequest}
         />
       </div>
 
@@ -141,8 +132,8 @@ export function DeskExperience() {
           <span className="absolute left-1/2 top-1/2 h-px w-4 -translate-x-1/2 bg-white/60" />
           <span className="absolute left-1/2 top-1/2 h-4 w-px -translate-y-1/2 bg-white/60" />
           <p className="absolute bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[9px] uppercase tracking-[0.18em] text-white/45 sm:bottom-8">
-            WASD move&nbsp;&nbsp;·&nbsp;&nbsp;Shift faster&nbsp;&nbsp;·&nbsp;&nbsp;R
-            reset&nbsp;&nbsp;·&nbsp;&nbsp;Esc exit
+            WASD move&nbsp;&nbsp;·&nbsp;&nbsp;Shift run&nbsp;&nbsp;·&nbsp;&nbsp;Space
+            jump&nbsp;&nbsp;·&nbsp;&nbsp;R reset&nbsp;&nbsp;·&nbsp;&nbsp;Esc exit
           </p>
         </div>
       )}
@@ -157,7 +148,7 @@ export function DeskExperience() {
             id="desk-enter-scene"
             type="button"
             disabled={!ready}
-            onClick={enterWalkthrough}
+            onClick={() => setMode("walk")}
             className="glass-panel group inline-flex h-11 items-center gap-3 px-4 font-mono text-[9px] uppercase tracking-[0.18em] text-white/75 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 disabled:cursor-wait disabled:text-white/25 sm:px-5"
           >
             <MousePointer2 aria-hidden="true" className="size-3.5" />

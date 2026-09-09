@@ -12,7 +12,6 @@ import {
   useMemo,
   useRef,
   useState,
-  type ComponentRef,
 } from "react";
 import {
   ACESFilmicToneMapping,
@@ -27,6 +26,10 @@ const INSPECT_POSITION: [number, number, number] = [7.25, 5.15, 7.8];
 const MOBILE_INSPECT_POSITION: [number, number, number] = [10.6, 7.2, 11.4];
 const WALK_POSITION: [number, number, number] = [0, 1.65, 6.25];
 const TARGET: [number, number, number] = [0, 1.45, 0];
+const WALK_SPEED = 2.4;
+const RUN_SPEED = 4.8;
+const JUMP_VELOCITY = 5.8;
+const GRAVITY = 16;
 
 type CameraMode = "inspect" | "walk";
 
@@ -35,7 +38,6 @@ type DeskSceneProps = {
   resetToken: number;
   onModeChange: (mode: CameraMode) => void;
   onReady: () => void;
-  onWalkRequestReady: (request: () => void) => void;
 };
 
 function DeskModel({ onReady }: Pick<DeskSceneProps, "onReady">) {
@@ -60,14 +62,9 @@ function CameraRig({
   mode,
   resetToken,
   onModeChange,
-  onWalkRequestReady,
-}: Pick<
-  DeskSceneProps,
-  "mode" | "resetToken" | "onModeChange" | "onWalkRequestReady"
->) {
+}: Pick<DeskSceneProps, "mode" | "resetToken" | "onModeChange">) {
   const camera = useThree((state) => state.camera);
   const aspect = useThree((state) => state.size.width / state.size.height);
-  const pointerLock = useRef<ComponentRef<typeof PointerLockControls>>(null);
   const [autoRotate, setAutoRotate] = useState(
     () =>
       typeof window === "undefined" ||
@@ -83,14 +80,6 @@ function CameraRig({
 
   }, [aspect, camera, mode, resetToken]);
 
-  useEffect(() => {
-    onWalkRequestReady(() => {
-      pointerLock.current?.lock();
-    });
-
-    return () => onWalkRequestReady(() => undefined);
-  }, [onWalkRequestReady]);
-
   return (
     <>
       <OrbitControls
@@ -100,14 +89,14 @@ function CameraRig({
         dampingFactor={0.055}
         autoRotate={autoRotate && mode === "inspect"}
         autoRotateSpeed={0.35}
-        minDistance={3.9}
-        maxDistance={14}
+        minDistance={1.25}
+        maxDistance={28}
         minPolarAngle={0.18}
         maxPolarAngle={Math.PI / 2.03}
         onStart={() => setAutoRotate(false)}
       />
       <PointerLockControls
-        ref={pointerLock}
+        selector="#desk-enter-scene"
         onLock={() => {
           setAutoRotate(false);
           onModeChange("walk");
@@ -128,6 +117,8 @@ function WalkMovement({
 }) {
   const camera = useThree((state) => state.camera);
   const keys = useRef(new Set<string>());
+  const verticalVelocity = useRef(0);
+  const grounded = useRef(true);
   const vectors = useRef({
     forward: new Vector3(),
     right: new Vector3(),
@@ -144,14 +135,20 @@ function WalkMovement({
     const reset = () => {
       camera.position.set(...WALK_POSITION);
       camera.lookAt(...TARGET);
+      verticalVelocity.current = 0;
+      grounded.current = true;
     };
     const onKeyDown = (event: KeyboardEvent) => {
       const key = event.key.toLowerCase();
 
-      if (["w", "a", "s", "d", "shift", "r"].includes(key)) {
+      if (["w", "a", "s", "d", "shift", "r", " "].includes(key)) {
         event.preventDefault();
       }
       if (key === "r") reset();
+      if (event.code === "Space" && !event.repeat && grounded.current) {
+        verticalVelocity.current = JUMP_VELOCITY;
+        grounded.current = false;
+      }
       pressedKeys.add(key);
     };
     const onKeyUp = (event: KeyboardEvent) => {
@@ -175,6 +172,8 @@ function WalkMovement({
     if (active) {
       camera.position.set(...WALK_POSITION);
       camera.lookAt(...TARGET);
+      verticalVelocity.current = 0;
+      grounded.current = true;
     }
   }, [active, camera, resetToken]);
 
@@ -182,6 +181,7 @@ function WalkMovement({
   useFrame((_, delta) => {
     if (!active) return;
 
+    const frameDelta = Math.min(delta, 0.05);
     const { forward, right, movement } = vectors.current;
     camera.getWorldDirection(forward);
     forward.setY(0);
@@ -195,12 +195,20 @@ function WalkMovement({
     if (keys.current.has("a")) movement.sub(right);
 
     if (movement.lengthSq() > 0) {
-      const speed = keys.current.has("shift") ? 4 : 2;
-      camera.position.addScaledVector(movement.normalize(), speed * Math.min(delta, 0.1));
+      const speed = keys.current.has("shift") ? RUN_SPEED : WALK_SPEED;
+      camera.position.addScaledVector(movement.normalize(), speed * frameDelta);
+    }
+
+    verticalVelocity.current -= GRAVITY * frameDelta;
+    camera.position.y += verticalVelocity.current * frameDelta;
+
+    if (camera.position.y <= WALK_POSITION[1]) {
+      camera.position.y = WALK_POSITION[1];
+      verticalVelocity.current = 0;
+      grounded.current = true;
     }
 
     camera.position.x = MathUtils.clamp(camera.position.x, -7.5, 7.5);
-    camera.position.y = WALK_POSITION[1];
     camera.position.z = MathUtils.clamp(camera.position.z, -7.5, 8.5);
   });
   /* eslint-enable react-hooks/immutability */
@@ -239,7 +247,6 @@ function SceneContents(props: DeskSceneProps) {
         mode={props.mode}
         resetToken={props.resetToken}
         onModeChange={props.onModeChange}
-        onWalkRequestReady={props.onWalkRequestReady}
       />
     </>
   );

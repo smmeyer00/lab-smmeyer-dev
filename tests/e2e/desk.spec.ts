@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test.describe.configure({ timeout: 45_000 });
+test.describe.configure({ timeout: 60_000 });
 
 test("loads the desk model into the interactive viewer", async ({ page }) => {
   const browserErrors: string[] = [];
@@ -63,8 +63,33 @@ test("enters and exits the keyboard walkthrough", async ({ page }, testInfo) => 
   const viewer = page.getByTestId("desk-viewer");
   await expect(viewer).toHaveAttribute("data-ready", "true", { timeout: 30_000 });
 
+  const canvas = page.locator("canvas");
+  const bounds = await canvas.boundingBox();
+  expect(bounds).not.toBeNull();
+  if (bounds) {
+    await page.mouse.move(bounds.x + bounds.width * 0.62, bounds.y + bounds.height * 0.55);
+    await page.mouse.down();
+    await page.mouse.move(bounds.x + bounds.width * 0.52, bounds.y + bounds.height * 0.48, {
+      steps: 8,
+    });
+    await page.mouse.up();
+  }
+  await expect(viewer).toHaveAttribute("data-mode", "inspect");
+
   await page.getByRole("button", { name: "Enter scene" }).click();
   await expect(viewer).toHaveAttribute("data-mode", "walk");
+
+  const beforeJump = await canvas.screenshot();
+  await page.keyboard.press("Space");
+  await page.waitForTimeout(150);
+  const duringJump = await canvas.screenshot();
+  expect(duringJump.equals(beforeJump)).toBe(false);
+
+  await page.keyboard.down("Shift");
+  await page.keyboard.down("w");
+  await page.waitForTimeout(200);
+  await page.keyboard.up("w");
+  await page.keyboard.up("Shift");
 
   await page.keyboard.press("Escape");
   await expect(viewer).toHaveAttribute("data-mode", "inspect");
