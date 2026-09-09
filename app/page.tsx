@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 import labHero from "@/public/lab-hero.png";
@@ -98,7 +99,7 @@ export default function Home() {
         <div className="absolute bottom-10 right-5 z-10 hidden text-right font-mono text-[9px] uppercase leading-5 tracking-[0.18em] text-white/35 sm:block sm:right-8 lg:right-12">
           <p>Current / 001</p>
           <p>Next / /desk</p>
-          <p className="mt-2 text-white/60">Status / building</p>
+          <p className="mt-2 text-white/60">Status / open</p>
         </div>
       </section>
 
@@ -125,7 +126,11 @@ export default function Home() {
             </p>
           </div>
 
-          <article className="group grid border-b border-white/14 py-8 md:grid-cols-[0.82fr_1.18fr] md:gap-12 md:py-12 lg:gap-20">
+          <Link
+            href="/desk"
+            aria-label="Open the desk experiment"
+            className="group grid border-b border-white/14 py-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 md:grid-cols-[0.82fr_1.18fr] md:gap-12 md:py-12 lg:gap-20"
+          >
             <div className="flex flex-col justify-between py-2">
               <div>
                 <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
@@ -139,14 +144,15 @@ export default function Home() {
                 </h3>
                 <p className="mt-7 max-w-md text-sm leading-6 text-white/50 sm:text-base sm:leading-7">
                   I gave GPT-6 Astra reference photos and access to Blender through
-                  MCP. It handled the modeling. The interactive version is next.
+                  MCP. It handled the modeling. I put the result here so you can
+                  look around it or walk through it.
                 </p>
               </div>
 
               <div className="mt-12 flex items-end justify-between border-t border-white/10 pt-5 md:mt-16">
                 <div className="font-mono text-[9px] uppercase leading-5 tracking-[0.18em] text-white/35">
                   <p>GPT-6 Astra / Blender / MCP</p>
-                  <p className="text-white/65">Interactive viewer is next</p>
+                  <p className="text-white/65">Walk around the result</p>
                 </div>
                 <span className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-white/45 md:block">
                   /desk
@@ -170,10 +176,10 @@ export default function Home() {
                   <span className="signal-dot size-1.5 rounded-full bg-[#e7e3d8]" />
                   Model / complete
                 </span>
-                <span>Viewer / building</span>
+                <span>Viewer / open</span>
               </div>
             </figure>
-          </article>
+          </Link>
 
           <p className="mt-6 max-w-sm text-xs leading-5 text-white/35">
             This list will grow when I have something interesting enough to share.

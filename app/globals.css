@@ -125,6 +125,22 @@
   backdrop-filter: blur(18px);
 }
 
+.desk-screen-vignette {
+  background:
+    radial-gradient(circle at 58% 48%, transparent 25%, rgba(5, 5, 4, 0.18) 72%, rgba(5, 5, 4, 0.58) 100%),
+    linear-gradient(180deg, rgba(4, 4, 3, 0.2), transparent 24%, transparent 74%, rgba(4, 4, 3, 0.34));
+}
+
+.desk-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: soft-light;
+}
+
+.desk-loader-bar {
+  animation: desk-loader 1.35s ease-in-out infinite;
+}
+
 .hero-enter {
   opacity: 0;
   transform: translateY(18px);
@@ -223,6 +239,16 @@
   }
 }
 
+@keyframes desk-loader {
+  0% {
+    transform: translateX(-110%);
+  }
+  55%,
+  100% {
+    transform: translateX(310%);
+  }
+}
+
 @keyframes section-reveal {
   from {
     opacity: 0.72;
@@ -263,6 +289,7 @@
   .hero-image,
   .scan-beam,
   .signal-dot,
+  .desk-loader-bar,
   .reveal-on-scroll {
     opacity: 1;
     transform: none;

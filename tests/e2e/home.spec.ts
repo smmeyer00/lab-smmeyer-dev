@@ -16,7 +16,10 @@ test("renders the lab identity and current experiment", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: "My desk, rebuilt from photos." }),
   ).toBeVisible();
-  await expect(page.getByText("Interactive viewer is next")).toBeVisible();
+  await expect(page.getByText("Walk around the result")).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Open the desk experiment" }),
+  ).toHaveAttribute("href", "/desk");
   await expect(page.getByRole("link", { name: /Main site/i })).toHaveAttribute(
     "href",
     "https://smmeyer.dev",
