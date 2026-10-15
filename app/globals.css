@@ -175,23 +175,38 @@
   animation: signal-pulse 2.8s ease-out infinite;
 }
 
-.experiment-visual::after {
+.project-row::before {
   position: absolute;
   inset: 0;
   content: "";
   pointer-events: none;
-  background: linear-gradient(
-    115deg,
-    transparent 35%,
-    rgba(255, 255, 255, 0.08) 50%,
-    transparent 65%
-  );
-  transform: translateX(-120%);
-  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  background: linear-gradient(105deg, rgba(255, 255, 255, 0.035), transparent 62%);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.experiment-visual:hover::after {
-  transform: translateX(120%);
+.project-row:hover::before,
+.project-row:focus-visible::before {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.books-model-list {
+  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+  scrollbar-width: thin;
+}
+
+.books-model-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.books-model-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.books-model-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
 }
 
 @keyframes hero-enter {
@@ -296,7 +311,7 @@
     animation: none;
   }
 
-  .experiment-visual::after {
-    display: none;
+  .project-row::before {
+    transition: none;
   }
 }

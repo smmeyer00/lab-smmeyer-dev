@@ -11,19 +11,29 @@ test("renders the lab identity and current experiment", async ({ page }) => {
     page.getByText("Things I build to figure out whether they’ll work."),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Building now" }),
+    page.getByRole("heading", { name: "Experiments" }),
   ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "My desk, rebuilt from photos." }),
   ).toBeVisible();
-  await expect(page.getByText("Walk around the result")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Twenty books, rebuilt in Blender." }),
+  ).toBeVisible();
+  await expect(page.getByText("Open experiment")).toHaveCount(2);
   await expect(
     page.getByRole("link", { name: "Open the desk experiment" }),
   ).toHaveAttribute("href", "/desk");
+  await expect(
+    page.getByRole("link", { name: "Open the books experiment" }),
+  ).toHaveAttribute("href", "/books");
   await expect(page.getByRole("link", { name: /Main site/i })).toHaveAttribute(
     "href",
     "https://smmeyer.dev",
   );
+  await expect(page.getByText("© 2026 Steven Meyer")).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "smmeyer.dev", exact: true }),
+  ).toHaveAttribute("href", "https://smmeyer.dev");
 
   await expect(page.locator("html")).toHaveClass(/dark/);
   await expect
@@ -39,7 +49,7 @@ test("moves from the hero to the experiment index", async ({ page }) => {
 
   await expect(page).toHaveURL(/#experiments$/);
   await expect(
-    page.getByRole("heading", { name: "Building now" }),
+    page.getByRole("heading", { name: "Experiments" }),
   ).toBeInViewport();
 });
 

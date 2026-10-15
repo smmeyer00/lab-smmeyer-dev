@@ -4,10 +4,25 @@ import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 import labHero from "@/public/lab-hero.png";
 
-const buildNotes = [
-  ["Input", "A tool or idea I can’t leave alone"],
-  ["Rule", "Make something real with it"],
-  ["Output", "Share the result, rough edges included"],
+const projects = [
+  {
+    number: "01",
+    href: "/desk",
+    label: "Open the desk experiment",
+    title: "My desk, rebuilt from photos.",
+    description:
+      "I gave GPT-6 Astra reference photos and access to Blender through MCP. It handled the modeling. You can inspect the result or walk through it with game controls.",
+    tools: ["GPT-6 Astra", "Blender", "MCP", "React Three Fiber"],
+  },
+  {
+    number: "02",
+    href: "/books",
+    label: "Open the books experiment",
+    title: "Twenty books, rebuilt in Blender.",
+    description:
+      "I had the Blender agent turn 20 books I’ve read recently into individual GLBs. The covers match the editions I had in mind. Most of the backs and spines are educated guesses.",
+    tools: ["GPT-6 Astra", "Blender", "MCP", "React Three Fiber"],
+  },
 ];
 
 export default function Home() {
@@ -97,8 +112,8 @@ export default function Home() {
         </div>
 
         <div className="absolute bottom-10 right-5 z-10 hidden text-right font-mono text-[9px] uppercase leading-5 tracking-[0.18em] text-white/35 sm:block sm:right-8 lg:right-12">
-          <p>Current / 001</p>
-          <p>Next / /desk</p>
+          <p>Current / 002</p>
+          <p>Next / /books</p>
           <p className="mt-2 text-white/60">Status / open</p>
         </div>
       </section>
@@ -106,152 +121,87 @@ export default function Home() {
       <section
         id="experiments"
         aria-labelledby="experiments-title"
-        className="relative border-t border-white/10 bg-[#0c0c0b] px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-40"
+        className="relative border-t border-white/10 bg-[#0c0c0b] px-5 py-24 sm:px-8 sm:py-28 lg:px-12 lg:py-32"
       >
         <div className="reveal-on-scroll mx-auto max-w-[92rem]">
           <div className="flex items-end justify-between border-b border-white/14 pb-5">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
-                Projects / 01
+                Project index / 02
               </p>
               <h2
                 id="experiments-title"
                 className="mt-3 text-3xl font-medium tracking-[-0.04em] text-[#e8e5dd] sm:text-5xl"
               >
-                Building now
+                Experiments
               </h2>
             </div>
             <p className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-white/35 sm:block">
-              One active project
+              Updated / Sep 2026
             </p>
           </div>
 
-          <Link
-            href="/desk"
-            aria-label="Open the desk experiment"
-            className="group grid border-b border-white/14 py-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 md:grid-cols-[0.82fr_1.18fr] md:gap-12 md:py-12 lg:gap-20"
-          >
-            <div className="flex flex-col justify-between py-2">
-              <div>
-                <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
-                  <span>001 / Blender + GPT-6 Astra</span>
-                  <span className="md:hidden">/desk</span>
-                </div>
-                <h3 className="mt-8 max-w-md text-4xl font-medium leading-[0.98] tracking-[-0.05em] text-[#e8e5dd] sm:text-6xl lg:text-7xl">
-                  My desk,
-                  <br />
-                  rebuilt from photos.
-                </h3>
-                <p className="mt-7 max-w-md text-sm leading-6 text-white/50 sm:text-base sm:leading-7">
-                  I gave GPT-6 Astra reference photos and access to Blender through
-                  MCP. It handled the modeling. I put the result here so you can
-                  look around it or walk through it.
-                </p>
-              </div>
-
-              <div className="mt-12 flex items-end justify-between border-t border-white/10 pt-5 md:mt-16">
-                <div className="font-mono text-[9px] uppercase leading-5 tracking-[0.18em] text-white/35">
-                  <p>GPT-6 Astra / Blender / MCP</p>
-                  <p className="text-white/65">Walk around the result</p>
-                </div>
-                <span className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-white/45 md:block">
-                  /desk
-                </span>
-              </div>
-            </div>
-
-            <figure className="experiment-visual relative mt-10 aspect-[4/3] overflow-hidden bg-[#121211] md:mt-0 md:aspect-[16/11]">
-              <Image
-                src={labHero}
-                alt="Wireframe details forming across a modeled desk and monitor"
-                fill
-                sizes="(min-width: 768px) 58vw, 100vw"
-                className="object-cover object-[72%_center] transition-transform duration-1000 ease-out group-hover:scale-[1.025]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
-              <div className="absolute left-0 top-0 size-5 border-l border-t border-white/45" />
-              <div className="absolute right-0 top-0 size-5 border-r border-t border-white/45" />
-              <div className="glass-panel absolute bottom-4 left-4 right-4 flex items-center justify-between px-4 py-3 font-mono text-[9px] uppercase tracking-[0.18em] text-white/55 sm:bottom-5 sm:left-5 sm:right-5 sm:px-5">
-                <span className="flex items-center gap-2.5">
-                  <span className="signal-dot size-1.5 rounded-full bg-[#e7e3d8]" />
-                  Model / complete
-                </span>
-                <span>Viewer / open</span>
-              </div>
-            </figure>
-          </Link>
-
-          <p className="mt-6 max-w-sm text-xs leading-5 text-white/35">
-            This list will grow when I have something interesting enough to share.
-          </p>
-        </div>
-      </section>
-
-      <section
-        aria-labelledby="method-title"
-        className="border-y border-white/10 bg-[#11110f] px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-40"
-      >
-        <div className="reveal-on-scroll mx-auto grid max-w-[92rem] gap-16 lg:grid-cols-[1.25fr_0.75fr] lg:gap-24">
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
-              Why this exists
-            </p>
-            <h2
-              id="method-title"
-              className="mt-6 max-w-4xl text-5xl font-medium leading-[0.98] tracking-[-0.055em] text-[#e8e5dd] sm:text-7xl lg:text-8xl"
+          {projects.map((project) => (
+            <Link
+              key={project.href}
+              href={project.href}
+              aria-label={project.label}
+              className="project-row group relative grid overflow-hidden border-b border-white/14 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 md:grid-cols-[7rem_minmax(0,1fr)_15rem] lg:grid-cols-[8rem_minmax(0,1fr)_18rem]"
             >
-              I learn faster when there’s something real to poke at.
-            </h2>
-            <p className="mt-8 max-w-xl text-base leading-7 text-white/48 sm:text-lg sm:leading-8">
-              I use this space to learn new tools by building with them. The result
-              doesn’t have to be useful. It does have to teach me something.
-            </p>
-          </div>
-
-          <dl className="self-end border-t border-white/14">
-            {buildNotes.map(([term, description], index) => (
-              <div
-                key={term}
-                className="grid grid-cols-[5.5rem_1fr] gap-4 border-b border-white/14 py-5"
-              >
-                <dt className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/35">
-                  {String(index + 1).padStart(2, "0")} / {term}
-                </dt>
-                <dd className="text-sm leading-5 text-white/65">{description}</dd>
+              <div className="relative z-10 flex items-center justify-between border-b border-white/10 py-5 font-mono text-[9px] uppercase tracking-[0.2em] text-white/40 md:flex-col md:items-start md:border-b-0 md:border-r md:py-9">
+                <span className="text-2xl tracking-[-0.05em] text-white/70">
+                  {project.number}
+                </span>
+                <span className="flex items-center gap-2">
+                  <span className="signal-dot size-1.5 rounded-full bg-[#e7e3d8]" />
+                  Open
+                </span>
               </div>
-            ))}
-          </dl>
-        </div>
-      </section>
 
-      <section className="relative bg-[#090908] px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-40">
-        <div className="lab-grid absolute inset-0 opacity-25" />
-        <div className="reveal-on-scroll relative mx-auto flex max-w-[92rem] flex-col items-start justify-between gap-12 sm:flex-row sm:items-end">
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
-              That’s it for now
-            </p>
-            <h2 className="mt-5 max-w-3xl text-5xl font-medium leading-[0.98] tracking-[-0.055em] text-[#e8e5dd] sm:text-7xl lg:text-8xl">
-              More when I make something worth sharing.
-            </h2>
-          </div>
-          <a
-            href="https://smmeyer.dev"
-            className="group inline-flex shrink-0 items-center gap-5 border-b border-white/40 pb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white transition-colors hover:border-white hover:text-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-          >
-            Back to smmeyer.dev
-            <ArrowUpRight
-              aria-hidden="true"
-              className="size-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
-            />
-          </a>
+              <div className="relative z-10 py-9 md:px-10 md:py-12 lg:px-14 lg:py-16">
+                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/38">
+                  Experiment / {project.number}
+                </p>
+                <h3 className="mt-5 max-w-3xl text-4xl font-medium leading-[0.98] tracking-[-0.05em] text-[#e8e5dd] transition-transform duration-500 ease-out group-hover:translate-x-1 sm:text-6xl lg:text-7xl">
+                  {project.title}
+                </h3>
+                <p className="mt-7 max-w-xl text-sm leading-6 text-white/50 sm:text-base sm:leading-7">
+                  {project.description}
+                </p>
+                <ul className="mt-9 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[9px] uppercase tracking-[0.16em] text-white/32">
+                  {project.tools.map((tool) => (
+                    <li key={tool}>{tool}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="relative z-10 flex items-center justify-between border-t border-white/10 py-6 md:flex-col md:items-start md:justify-between md:border-l md:border-t-0 md:px-7 md:py-10 lg:px-9 lg:py-12">
+                <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/35">
+                  {project.href}
+                </span>
+                <span className="inline-flex items-center gap-3 border-b border-white/35 pb-2 font-mono text-[9px] uppercase tracking-[0.18em] text-white/75 transition-colors group-hover:border-white group-hover:text-white">
+                  Open experiment
+                  <ArrowUpRight
+                    aria-hidden="true"
+                    className="size-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+                  />
+                </span>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
       <footer className="border-t border-white/10 bg-[#090908] px-5 py-7 sm:px-8 lg:px-12">
         <div className="mx-auto flex max-w-[92rem] items-center justify-between font-mono text-[9px] uppercase tracking-[0.18em] text-white/30">
-          <p>© 2026 SM Meyer</p>
-          <p>No roadmap. That’s the point.</p>
+          <p>© 2026 Steven Meyer</p>
+          <a
+            href="https://smmeyer.dev"
+            className="inline-flex items-center gap-1.5 transition-colors hover:text-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+          >
+            smmeyer.dev
+            <ArrowUpRight aria-hidden="true" className="size-3" />
+          </a>
         </div>
       </footer>
     </main>
