@@ -168,6 +168,8 @@ export function CharacterTopography() {
       const scale = mobile ? width * 0.115 : Math.min(width * 0.105, height * 0.195);
       const centerX = width * (mobile ? 0.64 : 0.75);
       const centerY = height * (mobile ? 0.32 : 0.53) - scrollProgress * 28;
+      const handoff = smoothstep(0.1, 0.85, scrollProgress);
+      const relief = 1 - handoff * 0.55;
       const a = elapsed * 0.16;
       const b = -elapsed * 0.12;
       const c = elapsed * 0.09;
@@ -186,7 +188,7 @@ export function CharacterTopography() {
         const waveA = point.sinA * cosA + point.cosA * sinA;
         const waveB = point.sinB * cosB + point.cosB * sinB;
         const waveC = point.cosC * cosC - point.sinC * sinC;
-        const heightValue = waveA * 0.85 + waveB * 0.45 + waveC * 0.15 + point.lift;
+        const heightValue = (waveA * 0.85 + waveB * 0.45 + waveC * 0.15 + point.lift) * relief;
         const rotatedX = point.x * COS_YAW - point.z * SIN_YAW;
         const depth = point.x * SIN_YAW + point.z * COS_YAW;
         const perspective = 11 / (11 + depth * 0.4);
@@ -200,19 +202,19 @@ export function CharacterTopography() {
 
         if (screenX < -20 || screenX > width + 20 || screenY < -20 || screenY > height + 20) continue;
 
-        const slopeX = (point.cosA * cosA - point.sinA * sinA) * 0.67
+        const slopeX = ((point.cosA * cosA - point.sinA * sinA) * 0.67
           - (point.cosB * cosB - point.sinB * sinB) * 0.126
-          - (point.sinC * cosC + point.cosC * sinC) * 0.222;
-        const slopeZ = (point.cosA * cosA - point.sinA * sinA) * 0.391
+          - (point.sinC * cosC + point.cosC * sinC) * 0.222) * relief;
+        const slopeZ = ((point.cosA * cosA - point.sinA * sinA) * 0.391
           + (point.cosB * cosB - point.sinB * sinB) * 0.504
-          - (point.sinC * cosC + point.cosC * sinC) * 0.108;
+          - (point.sinC * cosC + point.cosC * sinC) * 0.108) * relief;
         const light = Math.max(0, (0.73 - slopeX * 0.4 - slopeZ * 0.55) / Math.sqrt(1 + slopeX * slopeX + slopeZ * slopeZ));
         const contour = Math.exp(-((Math.sin(heightValue * 5.2) * 4) ** 2));
         const quietSpace = mobile ? 1 : 0.12 + smoothstep(0.28, 0.63, screenX / width) * 0.88;
         const verticalFade = mobile
           ? smoothstep(0.1, 0.2, screenY / height) * (1 - smoothstep(0.49, 0.65, screenY / height))
           : smoothstep(0.06, 0.22, screenY / height) * (1 - smoothstep(0.85, 1, screenY / height));
-        const opacity = (0.11 + light * 0.45 + contour * 0.28) * point.fade * quietSpace * verticalFade * (1 - scrollProgress * 0.28);
+        const opacity = (0.11 + light * 0.45 + contour * 0.28) * point.fade * quietSpace * verticalFade * (1 - handoff * 0.55);
         const tone = Math.min(TONES - 1, Math.floor(opacity * TONES));
         if (opacity < 0.025) continue;
 

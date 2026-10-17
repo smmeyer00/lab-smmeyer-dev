@@ -2,25 +2,24 @@ import Link from "next/link";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 import { CharacterTopography } from "@/components/character-topography";
+import { ProjectMark } from "@/components/project-mark";
 
 const projects = [
   {
-    number: "01",
+    kind: "desk" as const,
     href: "/desk",
     label: "Open the desk experiment",
     title: "My desk, rebuilt from photos.",
     description:
       "I gave GPT-6 Astra reference photos and access to Blender through MCP. It handled the modeling. You can inspect the result or walk through it with game controls.",
-    tools: ["GPT-6 Astra", "Blender", "MCP", "React Three Fiber"],
   },
   {
-    number: "02",
+    kind: "books" as const,
     href: "/books",
     label: "Open the books experiment",
     title: "Twenty books, rebuilt in Blender.",
     description:
       "I had the Blender agent turn 20 books I’ve read recently into individual GLBs. The covers match the editions I had in mind. Most of the backs and spines are educated guesses.",
-    tools: ["GPT-6 Astra", "Blender", "MCP", "React Three Fiber"],
   },
 ];
 
@@ -60,6 +59,7 @@ export default function Home() {
         className="relative isolate min-h-svh overflow-hidden bg-[#090908]"
       >
         <CharacterTopography />
+        <div aria-hidden="true" className="hero-handoff pointer-events-none absolute inset-x-0 bottom-0" />
 
         <div className="relative z-10 mx-auto flex min-h-svh max-w-[92rem] items-end px-5 pb-10 pt-32 sm:px-8 sm:pb-14 lg:items-center lg:px-12 lg:pb-0 lg:pt-20">
           <div className="w-full max-w-4xl">
@@ -98,85 +98,60 @@ export default function Home() {
             </a>
           </div>
         </div>
-
       </section>
 
       <section
         id="experiments"
         aria-labelledby="experiments-title"
-        className="relative border-t border-white/10 bg-[#0c0c0b] px-5 py-24 sm:px-8 sm:py-28 lg:px-12 lg:py-32"
+        className="relative bg-[#090908] px-5 pb-20 pt-10 sm:px-8 sm:pb-24 sm:pt-12 lg:px-12 lg:pb-28 lg:pt-14"
       >
-        <div className="reveal-on-scroll mx-auto max-w-[92rem]">
-          <div className="flex items-end justify-between border-b border-white/14 pb-5">
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
-                Project index / 02
-              </p>
-              <h2
-                id="experiments-title"
-                className="mt-3 text-3xl font-medium tracking-[-0.04em] text-[#e8e5dd] sm:text-5xl"
-              >
-                Experiments
-              </h2>
-            </div>
-            <p className="hidden font-mono text-[10px] uppercase tracking-[0.18em] text-white/35 sm:block">
-              Updated / Sep 2026
+        <div className="mx-auto max-w-[92rem]">
+          <div className="project-index-heading flex items-baseline justify-between gap-5 border-b border-white/16 pb-7 sm:pb-8">
+            <h2
+              id="experiments-title"
+              className="text-4xl font-medium leading-none tracking-[-0.045em] text-[#e8e5dd] sm:text-5xl"
+            >
+              Experiments
+            </h2>
+            <p className="text-xs text-white/40 sm:text-sm">
+              {projects.length} projects
             </p>
           </div>
 
-          {projects.map((project) => (
-            <Link
-              key={project.href}
-              href={project.href}
-              aria-label={project.label}
-              className="project-row group relative grid overflow-hidden border-b border-white/14 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 md:grid-cols-[7rem_minmax(0,1fr)_15rem] lg:grid-cols-[8rem_minmax(0,1fr)_18rem]"
-            >
-              <div className="relative z-10 flex items-center justify-between border-b border-white/10 py-5 font-mono text-[9px] uppercase tracking-[0.2em] text-white/40 md:flex-col md:items-start md:border-b-0 md:border-r md:py-9">
-                <span className="text-2xl tracking-[-0.05em] text-white/70">
-                  {project.number}
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="signal-dot size-1.5 rounded-full bg-[#e7e3d8]" />
-                  Open
-                </span>
-              </div>
+          <ul aria-label="Experiments" className="divide-y divide-white/12 border-b border-white/12">
+            {projects.map((project) => (
+              <li key={project.href}>
+                <Link
+                  href={project.href}
+                  aria-label={project.label}
+                  className="project-row group relative grid grid-cols-[4rem_minmax(0,1fr)] items-center gap-x-5 gap-y-5 py-8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-8 focus-visible:ring-offset-[#090908] sm:py-9 md:grid-cols-[6rem_minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-x-8 lg:grid-cols-[8rem_minmax(0,0.95fr)_minmax(0,1.15fr)_auto] lg:gap-x-10 lg:py-10"
+                >
+                  <ProjectMark kind={project.kind} />
 
-              <div className="relative z-10 py-9 md:px-10 md:py-12 lg:px-14 lg:py-16">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/38">
-                  Experiment / {project.number}
-                </p>
-                <h3 className="mt-5 max-w-3xl text-4xl font-medium leading-[0.98] tracking-[-0.05em] text-[#e8e5dd] transition-transform duration-500 ease-out group-hover:translate-x-1 sm:text-6xl lg:text-7xl">
-                  {project.title}
-                </h3>
-                <p className="mt-7 max-w-xl text-sm leading-6 text-white/50 sm:text-base sm:leading-7">
-                  {project.description}
-                </p>
-                <ul className="mt-9 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[9px] uppercase tracking-[0.16em] text-white/32">
-                  {project.tools.map((tool) => (
-                    <li key={tool}>{tool}</li>
-                  ))}
-                </ul>
-              </div>
+                  <h3 className="relative z-10 col-start-2 row-start-1 max-w-md text-2xl font-medium leading-[1.18] tracking-[-0.035em] text-[#e8e5dd] transition-colors duration-200 group-hover:text-white sm:text-3xl">
+                    {project.title}
+                  </h3>
 
-              <div className="relative z-10 flex items-center justify-between border-t border-white/10 py-6 md:flex-col md:items-start md:justify-between md:border-l md:border-t-0 md:px-7 md:py-10 lg:px-9 lg:py-12">
-                <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/35">
-                  {project.href}
-                </span>
-                <span className="inline-flex items-center gap-3 border-b border-white/35 pb-2 font-mono text-[9px] uppercase tracking-[0.18em] text-white/75 transition-colors group-hover:border-white group-hover:text-white">
-                  Open experiment
-                  <ArrowUpRight
-                    aria-hidden="true"
-                    className="size-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
-                  />
-                </span>
-              </div>
-            </Link>
-          ))}
+                  <p className="relative z-10 col-span-2 max-w-xl text-sm leading-6 text-white/50 md:col-span-1 md:col-start-3 md:row-span-2 md:row-start-1 lg:row-span-1">
+                    {project.description}
+                  </p>
+
+                  <span className="relative z-10 col-span-2 mt-1 inline-flex w-fit items-center gap-3 border-b border-white/30 pb-1 text-sm text-white/70 transition-colors duration-200 group-hover:border-white/70 group-hover:text-white md:col-span-1 md:col-start-2 md:row-start-2 lg:col-start-4 lg:row-start-1">
+                    Open experiment
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="size-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 motion-reduce:transform-none"
+                    />
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
       <footer className="border-t border-white/10 bg-[#090908] px-5 py-7 sm:px-8 lg:px-12">
-        <div className="mx-auto flex max-w-[92rem] items-center justify-between font-mono text-[9px] uppercase tracking-[0.18em] text-white/30">
+        <div className="mx-auto flex max-w-[92rem] items-center justify-between text-xs text-white/40">
           <p>© 2026 Steven Meyer</p>
           <a
             href="https://smmeyer.dev"

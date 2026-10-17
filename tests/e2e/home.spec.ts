@@ -104,6 +104,10 @@ test("animates the surface and pauses it outside the viewport", async ({ page })
 
   // Scroll immediately so this check measures the paused canvas, not smooth scrolling.
   await page.evaluate(() => {
+    // The compact index can fit in one viewport; add room to fully scroll past the hero.
+    const spacer = document.createElement("div");
+    spacer.style.height = "100vh";
+    document.body.append(spacer);
     document.documentElement.style.scrollBehavior = "auto";
     window.scrollTo(0, document.getElementById("experiments")!.offsetTop + 60);
   });
@@ -115,6 +119,24 @@ test("animates the surface and pauses it outside the viewport", async ({ page })
 
   await page.evaluate(() => window.scrollTo(0, 0));
   await expect.poll(() => artworkFingerprint(page)).not.toBe(pausedFrame);
+});
+
+test("opens experiments from the compact index with keyboard and pointer", async ({ page }) => {
+  await page.goto("/#experiments");
+  const index = page.getByRole("list", { name: "Experiments" });
+  await expect(index.getByRole("listitem")).toHaveCount(2);
+
+  const desk = index.getByRole("link", { name: "Open the desk experiment" });
+  await desk.focus();
+  await expect(desk).toBeFocused();
+  await desk.press("Enter");
+  await expect(page).toHaveURL(/\/desk$/);
+  await expect(page.getByRole("heading", { level: 1, name: "DESK." })).toBeVisible();
+
+  await page.goBack();
+  await page.getByRole("link", { name: "Open the books experiment" }).click();
+  await expect(page).toHaveURL(/\/books$/);
+  await expect(page.getByRole("heading", { level: 1, name: "BOOKS." })).toBeVisible();
 });
 
 test("keeps the hero and project navigation usable without canvas support", async ({ page }) => {

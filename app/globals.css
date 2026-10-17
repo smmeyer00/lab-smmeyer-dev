@@ -113,6 +113,11 @@
   opacity: 0;
 }
 
+.hero-handoff {
+  height: clamp(4rem, 12vh, 8rem);
+  background: linear-gradient(180deg, transparent, #090908);
+}
+
 .glass-panel {
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(12, 12, 11, 0.56);
@@ -161,19 +166,28 @@
 
 .project-row::before {
   position: absolute;
-  inset: 0;
+  inset: 0 -1.25rem;
   content: "";
   pointer-events: none;
-  background: linear-gradient(105deg, rgba(255, 255, 255, 0.035), transparent 62%);
-  transform: scaleX(0);
-  transform-origin: right center;
-  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0.025), transparent 72%);
+  opacity: 0;
+  transition: opacity 200ms ease-out;
 }
 
 .project-row:hover::before,
 .project-row:focus-visible::before {
-  transform: scaleX(1);
-  transform-origin: left center;
+  opacity: 1;
+}
+
+.project-mark {
+  transform: translateY(0);
+  transition: color 250ms ease, transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-row:hover .project-mark,
+.project-row:focus-visible .project-mark {
+  color: #e7e2d6;
+  transform: translateY(-2px);
 }
 
 .books-model-list {
@@ -220,10 +234,10 @@
   }
 }
 
-@keyframes section-reveal {
+@keyframes index-settle {
   from {
-    opacity: 0.72;
-    transform: translateY(20px);
+    opacity: 0.45;
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -232,10 +246,11 @@
 }
 
 @supports (animation-timeline: view()) {
-  .reveal-on-scroll {
-    animation: section-reveal linear both;
+  .project-index-heading,
+  .project-row {
+    animation: index-settle linear both;
     animation-timeline: view();
-    animation-range: entry 0% cover 24%;
+    animation-range: entry 0% entry 90%;
   }
 }
 
@@ -253,14 +268,21 @@
   .hero-enter,
   .signal-dot,
   .desk-loader-bar,
-  .reveal-on-scroll {
+  .project-index-heading,
+  .project-row {
     opacity: 1;
     transform: none;
     animation: none;
   }
 
   .project-row::before,
+  .project-mark,
   .topography-poster {
     transition: none;
+  }
+
+  .project-row:hover .project-mark,
+  .project-row:focus-visible .project-mark {
+    transform: none;
   }
 }
