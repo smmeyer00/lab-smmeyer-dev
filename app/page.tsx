@@ -1,8 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
-import labHero from "@/public/lab-hero.png";
+import { CharacterTopography } from "@/components/character-topography";
 
 const projects = [
   {
@@ -60,23 +59,12 @@ export default function Home() {
         aria-labelledby="hero-title"
         className="relative isolate min-h-svh overflow-hidden bg-[#090908]"
       >
-        <Image
-          src={labHero}
-          alt="A dark desk setup shifting from solid materials into a wireframe model"
-          fill
-          priority
-          quality={92}
-          sizes="100vw"
-          className="hero-image object-cover object-[68%_center]"
-        />
-        <div className="hero-vignette absolute inset-0" />
-        <div className="lab-grid absolute inset-0 opacity-60" />
-        <div className="scan-beam absolute inset-x-0 top-0 h-px bg-white/25" />
+        <CharacterTopography />
 
         <div className="relative z-10 mx-auto flex min-h-svh max-w-[92rem] items-end px-5 pb-10 pt-32 sm:px-8 sm:pb-14 lg:items-center lg:px-12 lg:pb-0 lg:pt-20">
           <div className="w-full max-w-4xl">
             <div className="hero-enter flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-white/55">
-              <span className="signal-dot size-1.5 rounded-full bg-[#e7e3d8]" />
+              <span className="size-1.5 rounded-full bg-[#e7e3d8]" />
               Personal experiments
               <span className="h-px w-12 bg-white/25" />
               Est. 2026
@@ -111,11 +99,6 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="absolute bottom-10 right-5 z-10 hidden text-right font-mono text-[9px] uppercase leading-5 tracking-[0.18em] text-white/35 sm:block sm:right-8 lg:right-12">
-          <p>Current / 002</p>
-          <p>Next / /books</p>
-          <p className="mt-2 text-white/60">Status / open</p>
-        </div>
       </section>
 
       <section
