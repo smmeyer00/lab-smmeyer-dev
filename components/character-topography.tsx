@@ -7,6 +7,7 @@ const GLYPHS = ["·", ":", "+", "×"];
 const TONES = 32;
 const TILE_SIZE = 18;
 const FRAME_INTERVAL = 1000 / 30;
+const POINTER_FOLLOW = 2.2;
 const YAW = -0.32;
 const PITCH = 0.88;
 const COS_YAW = Math.cos(YAW);
@@ -159,7 +160,7 @@ export function CharacterTopography() {
       const animated = !motionQuery.matches;
       if (animated) elapsed += delta;
 
-      const ease = 1 - Math.exp(-delta * 5);
+      const ease = 1 - Math.exp(-delta * POINTER_FOLLOW);
       pointer.x += (pointer.targetX - pointer.x) * ease;
       pointer.y += (pointer.targetY - pointer.y) * ease;
       pointer.strength += (pointer.targetStrength - pointer.strength) * ease;
